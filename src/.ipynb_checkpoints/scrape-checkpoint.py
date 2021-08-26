@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from src.helper_functions import url_scraper
+from helper_functions import url_scraper
 
 
 # URL for City of Phoenix city checkbook
@@ -22,4 +22,4 @@ page_soup = BeautifulSoup(page_html, 'html.parser')
 
 web_scrapings = url_scraper(page_soup)
 
-return web_scrapings
+print(web_scrapings)
