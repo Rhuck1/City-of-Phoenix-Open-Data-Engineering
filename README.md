@@ -36,7 +36,7 @@ Just click next until step 6 is reached...maybe it should be renamed a fourfold 
 **Step 6: Configure Security Group**  
 Now we are going to restrict SSH access on port 22 by selecting My IP under the *Source* column dropdown. Then click Add Rule, and in the new row that appears, select PostgreSQL under the *Type* column dropdown as well as selecting My IP under the *Source* column dropdown so we can apply the same rule to port 5432 which is used by the PostgreSQL service.
 
-
+**Step 7: ??**
 
 ## Creating and Connecting to PostgreSQL Database  
 
