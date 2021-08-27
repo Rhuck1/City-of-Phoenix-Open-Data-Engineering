@@ -31,7 +31,7 @@ Ubuntu Server 20.04 LTS (HVM),EBS General Purpose (SSD) Volume Type. Support ava
 Choose the **t2.micro** instance type.   
 
 **Steps 3-5**  
-Just click next until step 6 is reached.  
+Just click next until step 6 is reached...maybe it should be renamed a fourfold path?  
 
 **Step 6: Configure Security Group**  
 Now we are going to restrict SSH access on port 22 by selecting My IP under the *Source* column dropdown. Then click Add Rule, and in the new row that appears, select PostgreSQL under the *Type* column dropdown as well as selecting My IP under the *Source* column dropdown so we can apply the same rule to port 5432 which is used by the PostgreSQL service.
