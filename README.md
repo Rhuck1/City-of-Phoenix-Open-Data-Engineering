@@ -7,6 +7,8 @@
 This project will serve to highlight the data engineering process. I will automate the collection of the City of Phoenix City Checkbook fiance data from their Open Data website. It will then be processed through a data pipeline where a model will be applied and the results broadcast through a web application.  
 
 
+Below is an outline of the data engineering pipeline  
+<img src="images/pipeline_process.png" width="800">  
 
 
 ## Setting up an S3 bucket  
