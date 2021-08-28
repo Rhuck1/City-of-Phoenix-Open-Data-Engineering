@@ -134,6 +134,50 @@ Then exit the postgres service:
 ```console
 exit
 ```   
-wtf why is my lab closing?
+
+Right now our postgres server is only accessible from within the virtual machine. To make it accessible from the outside we will need to edit the postgres configuration file. To do this we will find it:  
+
+```console
+sudo find / -name "postgresql.conf"
+```  
+    >>>/usr/lib/tmpfiles.d/postgresql.conf
+    >>>/etc/postgresql/12/main/postgresql.conf  
+    
+And then edit the line that says listen_addresses:  
+
+```console
+sudo nano /etc/postgresql/12/main/postgresql.conf
+```  
+
+It needs to be changed from *localhost* to *. This will allow Postgres to communicate over the public DNS name of this server:  
+
+    listen_addresses = '*'  
+    
+Next we need to allow users to authenticate with the server. In order to do that we are going to find another file:  
+
+```console
+sudo find / -name "pg_hba.conf"
+```  
+
+    >>>/etc/postgresql/12/main/pg_hba.conf
+
+We are going to edit this file with nano:  
+
+```console
+sudo nano /etc/postgresql/12/main/postgresql.conf
+```  
+
+And at the bottom of the file, drop in the following code:  
+
+    host    all             all             0.0.0.0/0               md5
+    host    all             all             ::/0                    md5  
+    
+Now we are going to restart postgres:  
+
+```console
+sudo systemctl restart postgresql
+```  
+
+
 
 
