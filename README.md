@@ -34,9 +34,27 @@ Choose the **t2.micro** instance type.
 Just click next until step 6 is reached...maybe it should be renamed a fourfold path?  
 
 **Step 6: Configure Security Group**  
-Now we are going to restrict SSH access on port 22 by selecting My IP under the *Source* column dropdown. Then click Add Rule, and in the new row that appears, select PostgreSQL under the *Type* column dropdown as well as selecting My IP under the *Source* column dropdown so we can apply the same rule to port 5432 which is used by the PostgreSQL service.
+Now we are going to restrict SSH access on port 22 by selecting My IP under the *Source* column dropdown. Then click Add Rule, and in the new row that appears, select PostgreSQL under the *Type* column dropdown as well as selecting My IP under the *Source* column dropdown so we can apply the same rule to port 5432 which is used by the PostgreSQL service. Then click next.
 
-**Step 7: ??**
+**Step 7: Review Instance Launch**  
+
+Click the Launch button in the lower right hand of page. Now we will create a new key pair by selecting this option in the first dropdown. Then type in the key pair name below the dropdown (i.e postgres-on-ec2) and click Download Key Pair to dowload the key pair. After it has been downloaded, click on Launch Instances.  
+
+While the instances launch jump into your terminal and navigate to your downloads directory and enable read-only mode on the pem file just downloaded. An example of the command to do so is below, just remember to use your pem file name:  
+
+```console
+chmod 0400 postgres-on-ec2.pem
+```
+
+This will allow us to read the file and allow us to authenticate with the server.  
+
+Next, move the file to the .ssh directory:  
+
+```console
+mv postgres-on-ec2.pem ~/.ssh
+```  
+
+Next, open up your ssh config in your coding environment
 
 ## Creating and Connecting to PostgreSQL Database  
 
