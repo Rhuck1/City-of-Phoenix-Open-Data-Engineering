@@ -134,6 +134,6 @@ Then exit the postgres service:
 ```console
 exit
 ```   
-wtf
+wtf why is my lab closing?
 
 
