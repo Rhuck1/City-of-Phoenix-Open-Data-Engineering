@@ -19,7 +19,7 @@ First, you will navigate to AWS cloud services site [here](https://aws.amazon.co
 [Here](https://www.youtube.com/watch?v=fc05rd0iZhM) is a nice YouTube video for more assistance.
 
 
-## Creating an EC2 instance: The sevenfold path  
+## Creating an EC2 instance and a PostgreSQL Database
 
 **Step 1: Choose an Amazon Machine Image**  
 While you are in your AWS management console you will again click the Services dropdown in the upper left corner of the page. This will display the EC2 instance option under the *Compute* category, select it. On the next page you will click Launch Instance. At this point you are free to use whatever OS you prefer, however this is what I used:  
@@ -40,6 +40,11 @@ Now we are going to restrict SSH access on port 22 by selecting My IP under the 
 
 Click the Launch button in the lower right hand of page. Now we will create a new key pair by selecting this option in the first dropdown. Then type in the key pair name below the dropdown (i.e postgres-on-ec2) and click Download Key Pair to dowload the key pair. After it has been downloaded, click on Launch Instances.  
 
+At this point it's probably best to follow the details in this video [here](https://www.youtube.com/watch?v=LV2ooRnZqpg) beginning at 1:40, however I will do my best to capture them.  
+
+
+## Connecting to PostgreSQL Database  
+
 While the instances launch jump into your terminal and navigate to your downloads directory and enable read-only mode on the pem file just downloaded. An example of the command to do so is below, just remember to use your pem file name:  
 
 ```console
@@ -54,7 +59,81 @@ Next, move the file to the .ssh directory:
 mv postgres-on-ec2.pem ~/.ssh
 ```  
 
-Next, open up your ssh config in your coding environment
+Open the ssh config in your coding environ:  
 
-## Creating and Connecting to PostgreSQL Database  
+```console
+code ~/ssh/config
+```  
+
+Then provide the following info, where HostName is the IP address of your EC2 instance:  
+ 
+    Host postgres-on-ec2
+        HostName ##.###.###.###
+        User ubuntu
+        IdentityFile ~/.ssh/postgres-on-ec2.pem
+        IdentitiesOnly yes
+
+Now we can connect to the remote machine with the following command:  
+
+```console
+ssh postgres-on-ec2.pem
+```  
+
+Next, update the package list and upgrade the system:  
+
+```console
+sudo apt-get update -y
+```  
+
+With the package list updated, let's install postgres:  
+
+```console
+sudo apt install postgresql -y
+```  
+
+The postgres installer will create a user for us named postgres, this user can be used to communicate with the postgres service. First we are going to login as postgres:  
+
+```console
+sudo su postgres
+```  
+
+Then we are going to use the postgres user to create a role named ubuntu:  
+
+```console
+psql -U postgres -c "CREATE ROLE ubuntu;"
+```  
+
+This role will be used to communicate with the database.  
+
+```console
+psql -U postgres -c "CREATE ROLE ubuntu;"
+```  
+
+Apparently the best practice is to create users with the minimum amount of priviledges they need to carry out whatever operations you want them to do. In this example we are going to allow the ubuntu role to login and create databases.  
+
+```console
+psql -U postgres -c "ALTER ROLE ubuntu WITH LOGIN;"
+```  
+
+Then:  
+
+```console
+psql -U postgres -c "ALTER USER ubuntu CREATEDB;"
+```  
+
+SIDE NOTE: In case you want to store multiple databases that will be consumed by different applications, make sure to create one user per application. This way you can control access and compartmentalize what databases will be accessible why which user.  
+
+To finish up the user configuration we are going to assign a password, where 'password' is whatever password you decide to choose:  
+
+```console
+psql -U postgres -c "ALTER USER ubuntu WTIH PASSWORD 'password';"
+```  
+
+Then exit the postgres service:
+
+```console
+exit
+```   
+
+
 
