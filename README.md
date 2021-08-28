@@ -178,6 +178,16 @@ Now we are going to restart postgres:
 sudo systemctl restart postgresql
 ```  
 
+At this point the server is ready for use. I am going to use pgAdmin to test it out by opening up pgAdmin in the browser: 
+
+http://server_ip/pgadmin4  
+
+Making sure to change server_ip with localhost, domain name pointed the system or system ip address. Then I will click on Add New Server. In the popup under the tab *General* I am going to give it the name *ec2-postgres*. Then under the *Connection* tab I am going populate the Host name/address field with the public DNS name from my EC2 instance (i.e. Public IPv4 DNS) in the AWS management console. Finally, I will provide the *Username* and *Password* that we configured from earlier and save.    
+
+Now I will R-click on *Databases* -> Create -> Database... and name it *test_database* in the *Database* field. Head over to this database on the left side of the pgAdmin panel. Click the *Schemas* dropdown and R-click *Tables* -> Create -> Table... to create a *users* table by inputing users into the *Name* field. Then click on the *Columns* header to add a column *Name* "name" with a *Data type* "text" and save.  
+
+
+
 
 
 
