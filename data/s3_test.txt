@@ -1,2 +1,0 @@
-If you can read this, the s3 upload test was successful!!!
-Will this call the aws config file?

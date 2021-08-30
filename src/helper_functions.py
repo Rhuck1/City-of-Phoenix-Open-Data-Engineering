@@ -1,5 +1,7 @@
-import requests
+import os
 import boto3
+import requests
+from bs4 import BeautifulSoup
 from botocore.exceptions import NoCredentialsError
 
 
@@ -33,6 +35,29 @@ def url_scraper(page_soup):
     heading_csv_url_dict = {key:value for key, value in zip(checkbook_headings_list, csv_hrefs_list)}
     
     return heading_csv_url_dict
+
+
+def scrape_to_soup(url):
+    '''Combines url_scraper with api call and returns heading csv url dictionary
+    '''
+    
+    # establishing API connection
+    response = requests.get(url)
+
+    # checking connection status
+    if response.status_code == 200:
+        print('Connection established')
+    else:
+        print('There is a problem with the connection')
+
+    # scraping with BeautifulSoup    
+    page_html = response.text
+
+    page_soup = BeautifulSoup(page_html, 'html.parser')
+
+    web_scrapings = url_scraper(page_soup)
+    
+    return web_scrapings
 
 
 def writer(key, value):
@@ -91,7 +116,7 @@ def bulk_upload_to_aws(dict):
     for key, value in dict.items():
         
         # download csv and create file path 
-        file_path = writer_d(key, value)
+        file_path = writer(key, value)
         
         # create s3 file name
         name = file_path[5:]
@@ -99,3 +124,16 @@ def bulk_upload_to_aws(dict):
         
         # upload csv to s3
         upload_to_aws(file_path, bucket, s3_file)
+        
+        # deletes files from local data directory
+        os.remove(file_path)
+        
+        
+def clean_up(files):
+    '''Takes in a list of files to remove from local data directory
+    '''
+    
+    # loops through the list of files and removes them
+    for file in files:
+
+        os.remove(file)
