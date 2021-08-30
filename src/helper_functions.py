@@ -35,16 +35,16 @@ def url_scraper(page_soup):
     return heading_csv_url_dict
 
 
-def writer(tup):
-    '''Input: Takes a (key, value) tuple generated from iter() method. Key, Vals represent the date and csv link scraped earlier
+def writer(key, value):
+    '''Input: Takes the key, value pair in a for loop supplied by the dict of csv links scraped earlier
        Output: Downloads csv data and saves to data directory and outupts file path of downloaded csv
     '''
     
     # gets http response from City Checkbook csv link
-    r = requests.get(tup[1])
+    r = requests.get(value)
     
     # creates desired filepath for download
-    file_path = 'data/{}.csv'.format(tup[0])
+    file_path = 'data/{}.csv'.format(key)
     
     # writes csv into filepath
     open(file_path, 'wb').write(r.content)
@@ -75,3 +75,26 @@ def upload_to_aws(local_file, bucket, s3_file):
     except NoCredentialsError:
         print('Credentials not available')
         return False
+    
+    
+def bulk_upload_to_aws(dict):
+    
+    '''Input: Heading, Link (key, value) dictionary of scraped CSV links and headings
+    
+       Output: Downloads the CSV's to local data directory and uploads the csv to S3 instance
+    '''
+    
+    # S3 bucket that I am uploading to
+    bucket = 'city-of-phx-open-data-engineering-raw-db'
+
+    # loop through each Header, Link in dictionary
+    for key, value in dict.items():
+        
+        # download csv and create file path 
+        file_path = writer_d(key, value)
+        
+        # create s3 file name
+        s3_file = file_path[5:]
+        
+        # upload csv to s3
+        upload_to_aws(file_path, bucket, s3_file)
