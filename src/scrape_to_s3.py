@@ -4,7 +4,7 @@ from helper_functions import scrape_to_soup, bulk_upload_to_aws, clean_up
 
 
 # # URL for City of Phoenix city checkbook
-# url = 'https://www.phoenixopendata.com/dataset/city-checkbook'
+url = 'https://www.phoenixopendata.com/dataset/city-checkbook'
 
 # # establishing API connection
 # response = requests.get(url)

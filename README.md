@@ -76,7 +76,7 @@ Then provide the following info, where HostName is the IP address of your EC2 in
 Now we can connect to the remote machine with the following command:  
 
 ```console
-ssh postgres-on-ec2.pem
+ssh postgres-on-ec2
 ```  
 
 Next, update the package list and upgrade the system:  
