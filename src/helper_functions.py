@@ -94,7 +94,8 @@ def bulk_upload_to_aws(dict):
         file_path = writer_d(key, value)
         
         # create s3 file name
-        s3_file = file_path[5:]
+        name = file_path[5:]
+        s3_file = name
         
         # upload csv to s3
         upload_to_aws(file_path, bucket, s3_file)
