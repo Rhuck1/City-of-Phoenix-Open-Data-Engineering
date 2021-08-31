@@ -1,2 +1,4 @@
 secrets.py
 .ipynb_checkpoints
+config.py
+psycopg2_test.py
