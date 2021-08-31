@@ -15,14 +15,14 @@ Below is an outline of the data engineering pipeline
 
 I am going to use an S3 bucket as the first stop on my data pipeline journey. The S3 bucket will be useful to collect the raw data from the City of Phoenix city checkbook as is. This means that there will not be any data transformation (aka business logic) applied to the data at this step.
 
-First, you will navigate to AWS cloud services site [here](https://aws.amazon.com/). Create an account if you don't already have one, then log in. Once you are logged in you should see a Services dropdown in the upper left corner of the page, click it. Select the S3 option under the *Storage* category. Next, click Create Bucket, name it appropriately and you are off to the races.  
+First, you will navigate to AWS cloud services site [here](https://aws.amazon.com/). Create an account if you don't already have one, then log in. Once you are logged in you should see a Services dropdown in the upper left corner of the page, click it. Select the *S3* option under the *Storage* category. Next, click Create Bucket, name it appropriately and you are off to the races.  
 [Here](https://www.youtube.com/watch?v=fc05rd0iZhM) is a nice YouTube video for more assistance.
 
 
 ## Creating an EC2 instance and a PostgreSQL Database
 
 **Step 1: Choose an Amazon Machine Image**  
-While you are in your AWS management console you will again click the Services dropdown in the upper left corner of the page. This will display the EC2 instance option under the *Compute* category, select it. On the next page you will click Launch Instance. At this point you are free to use whatever OS you prefer, however this is what I used:  
+While you are in your AWS management console you will again click the Services dropdown in the upper left corner of the page. This will display the *EC2* instance option under the *Compute* category, select it. On the next page you will click Launch Instance. At this point you are free to use whatever OS you prefer, however this is what I used:  
 
 **Ubuntu Server 20.04 LTS (HVM), SSD Volume Type** - ami-03d5c68bab01f3496 (64-bit x86) / ami-09d9c897fc36713bf (64-bit Arm)  
 Ubuntu Server 20.04 LTS (HVM),EBS General Purpose (SSD) Volume Type. Support available from Canonical (http://www.ubuntu.com/cloud/services).  
@@ -185,6 +185,22 @@ http://server_ip/pgadmin4
 Making sure to change server_ip with localhost, domain name pointed the system or system ip address. Then I will click on Add New Server. In the popup under the tab *General* I am going to give it the name *ec2-postgres*. Then under the *Connection* tab I am going populate the Host name/address field with the public DNS name from my EC2 instance (i.e. Public IPv4 DNS) in the AWS management console. Finally, I will provide the *Username* and *Password* that we configured from earlier and save.    
 
 Now I will R-click on *Databases* -> Create -> Database... and name it *test_database* in the *Database* field. Head over to this database on the left side of the pgAdmin panel. Click the *Schemas* dropdown and R-click *Tables* -> Create -> Table... to create a *users* table by inputing users into the *Name* field. Then click on the *Columns* header to add a column *Name* "name" with a *Data type* "text" and save.  
+
+# Apache Airflow
+Let's return again to the AWS management console wehre we will select *Managed Apache Airflow* under the *Application Integration* category. Click on in and then in the subsequent page click on *Create environment*. Now it's probably best to follow along in setting up Airflow [here](https://www.youtube.com/watch?v=ZET50M20hkU).
+
+# How to Define a DAG  
+
+## 1) Import Modules  
+
+## 2) Define Default Arguments
+
+## 3) Instantiate the DAG  
+
+## 4) Define Tasks  
+
+## 5) Define Dependencies  
+
 
 
 
