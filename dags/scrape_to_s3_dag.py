@@ -3,15 +3,16 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 
+from helper_functions import scrape_to_soup, bulk_upload_to_aws, clean_up
 from scrape_to_s3 import scrape_import_to_s3
 
 default_args
 
 default_args = {
-                'owner': '',
+                'owner': 'airflow',
                 'start_date': datetime(2021, 9, 1),
                 'depends_on_past': False,
-                'email': ['bobbyhuck@gmail.com']
+                'email': ['bobbyhuck@gmail.com'],
                 'email_on_failure': False,
                 'email_on_retry': False,
                 'retries': 5,
